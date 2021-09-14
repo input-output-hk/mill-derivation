@@ -1,5 +1,5 @@
 final: prev: {
 
-  mill-derivation = final.callPackage ./mill-derivation.nix { };
+  mill-derivation = final.callPackage ./nix/mill-derivation.nix { };
 
 }
