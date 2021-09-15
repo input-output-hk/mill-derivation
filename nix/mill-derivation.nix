@@ -80,6 +80,14 @@ let
         # the cache will have paths that look like /build/j3c9f4mdqxiy4fsdmg7a0z3f0jb8znjz-source/.nix/
         # we need to remove the hashes which get incorrectly resolved
         # sed "$ivy_cache" -i -e "s|build/[^/]*/\.nix|build/\.nix|g"
+
+        find $out/.nix -name 'org.scala-sbt-compiler-bridge_*' -type f -print0 | xargs -r0 strip-nondeterminism
+
+        # set impure "inputsHash": <num> to just one
+        find $out/out -name 'meta.json' -type f -print0 | xargs -r0 sed -re 's/(-?[0-9]+)/1/g'
+
+        find $out/.nix -type d -empty -delete
+        find $out/out -type d -empty -delete
       '';
     };
   in stdenv.mkDerivation (depsAttrs // overrideDepsAttrs depsAttrs);
