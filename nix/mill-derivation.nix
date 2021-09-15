@@ -83,7 +83,7 @@ let
 
         # set impure "inputsHash": <num> to just one
         echo "Removing impure cache hashes"
-        find $out/out -name 'meta.json' -type f -print0 | xargs -r0 sed -re 's/(-?[0-9]+)/1/g'
+        find $out/out -name 'meta.json' -type f -print0 | xargs -r0 sed -ire 's/(-?[0-9]+)/1/g'
 
         echo "Removing empty directories"
         find $out/.nix -type d -empty -delete
@@ -91,6 +91,9 @@ let
 
         echo "Removing runtime jar"
         rm $out/.nix/rt-*.jar
+
+        echo "Remove profiling information"
+        rm $out/out/mill-profile.json
       '';
     };
   in stdenv.mkDerivation (depsAttrs // overrideDepsAttrs depsAttrs);
