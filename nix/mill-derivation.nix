@@ -83,7 +83,9 @@ let
 
         # set impure "inputsHash": <num> to just one
         echo "Removing impure cache hashes"
-        find $out/out -name 'meta.json' -type f -print0 | xargs -r0 sed -ire 's/(-?[0-9]+)/1/g'
+        find $out/out -name 'meta.json' -type f -delete
+        find $out/out -name 'meta.jsonre' -type f -delete
+        # find $out/out -name 'meta.json' -type f -print0 | xargs -r0 sed -i -r -e 's/(-?[0-9]+)/1/g'
 
         echo "Removing empty directories"
         find $out/.nix -type d -empty -delete
